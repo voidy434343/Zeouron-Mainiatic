@@ -800,6 +800,28 @@ Main.ScrollBarImageColor3 = Data.Color
 Main.ScrollBarImageTransparency = 0
 Main.CanvasSize = UDim2.new(0,0,0,0)
 
+local icon = Instance.new("TextButton")
+
+icon.Position = UDim2.new(0.5,0,0,0)
+icon.Size = UDim2.new(0.030 *1.45,0,0.05 *1.45,0)
+icon.BackgroundTransparency = 1
+icon.Parent = G
+icon.Text = "Z"
+icon.Font = Data.Font
+icon.TextColor3 = Data.Color
+icon.TextScaled = true
+setdrag(icon)
+icon.ZIndex = 1
+
+local back1 = Instance.new("ImageButton")
+
+back1.Position = UDim2.new(-0.12,0,-0.12,0)
+back1.Size = UDim2.new(1 *1.25,0,1 *1.25,0)
+back1.BackgroundTransparency = 1
+back1.Parent = icon
+back1.Image = "http://www.roblox.com/asset/?id=16446446084"
+back1.ZIndex = 0
+
 local Texto = Instance.new("TextButton")
 
 Texto.Position = UDim2.new(0,0,0,0)
@@ -1086,7 +1108,12 @@ local GamesLib = {
       		TABSHIT = TABSHIT +27
         end,
     
-    	NewSwitch = function(Name, func) 
+    	NewSwitch = function(Name, func, Onoff) 
+         	local onoff = Onoff
+         	if onoff == nil then
+            	onoff = false
+            end
+         
             local BUTTON = Instance.new("TextLabel")
 
 			BUTTON.Position = UDim2.new(0,95,0,TABSHIT)
@@ -1104,14 +1131,19 @@ local GamesLib = {
 			SWITCHER.Position = UDim2.new(0,400,0,7)
 			SWITCHER.Size = UDim2.new(0,25,0,25)
 			SWITCHER.Parent = BUTTON
-			SWITCHER.BackgroundColor3 = Data.DarkC
+   			if onoff then
+				SWITCHER.BackgroundColor3 = Data.Color
+    		else
+      			SWITCHER.BackgroundColor3 = Data.DarkC
+         	end
 			SWITCHER.ZIndex = 8
  			SWITCHER.Text = ""
       
       		Round(BUTTON, 0.05)
         	Round(SWITCHER, 0.05)
       
-      		local switcherbool = false
+      		local switcherbool = onoff
+        
       		SWITCHER.MouseButton1Click:Connect(function()
             	if switcherbool then
                  	SWITCHER.BackgroundColor3 = Data.DarkC
@@ -1151,7 +1183,7 @@ local GamesLib = {
     		SWITCHER.TextColor3 = Data.DarkC
  			SWITCHER.TextScaled = true
     		SWITCHER.ZIndex = 10
-    		SWITCHER.Text = name
+    		SWITCHER.Text = ""
     		SWITCHER.Font = Data.Font
        		SWITCHER.ClearTextOnFocus = false
       
@@ -1241,14 +1273,15 @@ mods.NewButton("Fly: Nameless", function() end)
 
 mods.NewLabel("Fly")
 mods.NewSwitch("Fly", function(bool) 
-    if bool then
+    _G.Fly = bool
+    if _G.Fly then
     	lp.Character.Humanoid.PlatformStand = false
         fly(45)
     else
     	lp.Character.Humanoid.PlatformStand = false
      	unfly()
     end
-end)
+end, _G.Fly)
 
 mods.NewLabel("Misc")
 
@@ -1257,22 +1290,22 @@ mods.NewButton("Die", function()
 end)
 
 mods.NewSwitch("TP last", function(bool) 
-    tplst = bool
-end)
+    _G.tplst = bool
+end, _G.tplst)
 
 local Bhop = false
 mods.NewSwitch("BHop", function(bool) 
-    Bhop = bool
+    _G.Bhop = bool
     lp.character.Humanoid:GetPropertyChangedSignal("Jump"):Connect(function()
-        if lp.character.Humanoid.Jump == true and Bhop then
+        if lp.character.Humanoid.Jump == true and _G.Bhop then
         	local vel = lp.character.Humanoid.MoveDirection *50 +lp.character.HumanoidRootPart.Velocity
          	lp.character.HumanoidRootPart.Velocity = vel
      	end
     end)
-end)
+end, _G.Bhop)
 
 CharDied = function(char)
-    if tplst then
+    if _G.tplst then
 		local hum = char:WaitForChild("HumanoidRootPart")
  		LastCf = hum.CFrame
   	end
@@ -1284,7 +1317,7 @@ end)
 
 lp.CharacterAdded:Connect(function(char)
     local hum = char:WaitForChild("Humanoid")
-    if tplst then
+    if _G.tplst then
     	local hum = char:WaitForChild("HumanoidRootPart")
  		hum.CFrame = LastCf
   	end
@@ -1293,7 +1326,7 @@ lp.CharacterAdded:Connect(function(char)
     end)
 end)
 
-local ms = GamesLib.NewTab("Mobile Shiftlock")
+local ms = GamesLib.NewTab("Mobile Aimbot")
 
 ms.NewLabel("Credits")
 ms.NewButton("== Dollynho ==", function() end)
@@ -1303,14 +1336,20 @@ ms.NewLabel("Main")
 local fov = 0 
 local maxDistance = 100
 local maxTransparency = 0
-local teamCheck = false
+if _G.teamCheck == nil then
+	_G.teamCheck = false
+end
 
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 local Players = game:GetService("Players")
 local Cam = game.Workspace.CurrentCamera
-local LockCam = false
-local howmuchup = 0
+if _G.LockCam == nil then
+	_G.LockCam = false
+end
+if _G.LockCam == nil then
+	_G.howmuchup = 0
+end
 
 local FOVring = Drawing.new("Circle")
 FOVring.Visible = true
@@ -1362,7 +1401,7 @@ local function getClosestPlayerInFOV(trg_part)
 
     for i = 1, #Players:GetPlayers() do
         local player = Players:GetPlayers()[i]
-        if player and player ~= localPlayer and (not teamCheck or player.Team ~= localPlayer.Team) then
+        if player and player ~= localPlayer and (not _G.teamCheck or player.Team ~= localPlayer.Team) then
             if isPlayerAlive(player) then
                 local part = player.Character and player.Character:FindFirstChild(trg_part)
                 if part then
@@ -1385,7 +1424,7 @@ RunService.RenderStepped:Connect(function()
     updateDrawings()
     if LockCam then
         local v2 = game.Workspace.CurrentCamera.ViewportSize /2
-    	mousemoveabs(v2.X, v2.Y +howmuchup)
+    	mousemoveabs(v2.X, v2.Y +_G.howmuchup)
     end
     local closest = getClosestPlayerInFOV("Head")
     if closest and closest.Character:FindFirstChild("Head") then
@@ -1404,30 +1443,31 @@ RunService.RenderStepped:Connect(function()
 end)
 
 ms.NewSwitch("Aimbot On", function(bool)
-    if bool then
+    _G.AimOn = bool
+    if _G.AimOn then
     	fov = 40
     else
     	fov = 0
     end
-end)
+end, _G.AimOn)
 
 ms.NewSwitch("Check team", function(bool)
-    teamCheck = bool
-end)
+    _G.teamCheck = bool
+end, _G.teamCheck)
 
 ms.NewSwitch("Lock Mouse", function(bool)
-    LockCam = bool
-end)
+    _G.LockCam = bool
+end, _G.LockCam)
 
 ms.NewTextBox("Lock Up", function(text)
-    howmuchup = tonumber(text)
-end)
+    _G.howmuchup = tonumber(text)
+end, _G.howmuchup)
 
 local espTab = GamesLib.NewTab("Esp")
 espTab.NewSwitch("Esp On", function(bool)
-    espon = bool
+    _G.espon = bool
     if bool then
-        while wait(1) and espon do
+        while wait(1) and _G.espon do
             for i,v in pairs(game.Players:GetChildren()) do
                 if v ~= lp and v.character then
                 	if v.character:FindFirstChild("Highlight") then
@@ -1442,7 +1482,7 @@ espTab.NewSwitch("Esp On", function(bool)
              		v.NameDisplayDistance = 100
              
              		TText = ""
-               		if showname then
+               		if _G.showname then
                     	TText = TText..v.DisplayName
                      	v.NameDisplayDistance = 0
                     end
@@ -1469,7 +1509,7 @@ espTab.NewSwitch("Esp On", function(bool)
 					TextLabel.Text = TText
 					TextLabel.ZIndex = 1
      
-     				if Healthbar then
+     				if _G.Healthbar then
              		local BillboardGui = Instance.new("BillboardGui")
 					local TextLabel = Instance.new("TextLabel")
      
@@ -1513,17 +1553,17 @@ espTab.NewSwitch("Esp On", function(bool)
             end
      	end
     end
-end)
+end, _G.espon)
 
 espTab.NewLabel("Hh")
 
 espTab.NewSwitch("Show name", function(bool)
-    showname = bool
-end)
+    _G.showname = bool
+end, _G.showname)
 
 espTab.NewSwitch("HealthBar", function(bool)
-    Healthbar = bool
-end)
+    _G.Healthbar = bool
+end, _G.Healthbar)
 
 charadded = function(char)
     local hum = char:WaitForChild("Humanoid")
@@ -1777,6 +1817,39 @@ Ex.MouseButton1Click:Connect(function()
 	PlayThis:Play()
  	wait(0.6)
   	G:Destroy()
+end)
+
+IconCan = true
+IconOnOff = true
+icon.MouseButton1Click:Connect(function()
+    print("attempt")
+    if IconCan then
+        print("Can")
+        if IconOnOff then
+            print("yup")
+        	IconOnOff = false
+         	local TweenInf0 = TweenInfo.new(0.6) 
+			local PlayThis = TweenService:Create(Main, TweenInf0, {Size = UDim2.new(0,620,0,0)})
+			PlayThis:Play()
+
+			local TweenInf0 = TweenInfo.new(0.6) 
+			local PlayThis = TweenService:Create(Main, TweenInf0, {Position = UDim2.new(Main.Position.X.Scale,Main.Position.X.Offset,Main.Position.Y.Scale,Main.Position.Y.Offset +230)})
+			PlayThis:Play()
+   			wait(0.6)
+  			Main.Visible = false
+        else
+        	print("nuh")
+        	IconOnOff = true
+         	Main.Visible = true
+         	local TweenInf0 = TweenInfo.new(0.6) 
+			local PlayThis = TweenService:Create(Main, TweenInf0, {Size = UDim2.new(0,620,0,460)})
+			PlayThis:Play()
+
+			local TweenInf0 = TweenInfo.new(0.6) 
+			local PlayThis = TweenService:Create(Main, TweenInf0, {Position = UDim2.new(Main.Position.X.Scale,Main.Position.X.Offset,Main.Position.Y.Scale,Main.Position.Y.Offset -230)})
+			PlayThis:Play()
+    	end
+    end
 end)
 
 Exec.MouseButton1Click:Connect(function()
