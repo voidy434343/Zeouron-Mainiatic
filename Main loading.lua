@@ -66,6 +66,7 @@ end
         LoadBar.Size = UDim2.new(0,565,0,50)
         LoadBar.BackgroundColor3 = Data.DarkC
         LoadBar.ZIndex = 87    
+        LoadBar.Name = "Loading"
         
         Round(LoadBar, 0.07)
         
@@ -95,25 +96,25 @@ end
 		local PlayThis = TweenService:Create(Main, TweenInf0, {Position = UDim2.new(Main.Position.X.Scale,Main.Position.X.Offset,Main.Position.Y.Scale,Main.Position.Y.Offset -230 +35)})
 		PlayThis:Play()
   
-  setclipboard(tostring(565 /4))
-  
-  while true do
+  	spawn(function()
+   	while true do
       	local TweenInf0 = TweenInfo.new(0.6) 
-		local PlayThis = TweenService:Create(LoadBar, TweenInf0, {Size = UDim2.new(0,565 /2,0,50)})
+		local PlayThis = game.TweenService:Create(LoadBar, TweenInf0, {Size = UDim2.new(0,565 /2,0,50)})
 		PlayThis:Play()
   
   		local TweenInf0 = TweenInfo.new(0.6) 
-		local PlayThis = TweenService:Create(LoadBar, TweenInf0, {Position = UDim2.new(0,25 +141.25,0,310)})
+		local PlayThis = game.TweenService:Create(LoadBar, TweenInf0, {Position = UDim2.new(0,25 +141.25,0,310)})
 		PlayThis:Play()
   		wait(1)
     	local TweenInf0 = TweenInfo.new(0.6) 
-		local PlayThis = TweenService:Create(LoadBar, TweenInf0, {Size = UDim2.new(0,565,0,50)})
+		local PlayThis = game.TweenService:Create(LoadBar, TweenInf0, {Size = UDim2.new(0,565,0,50)})
 		PlayThis:Play()
   
   		local TweenInf0 = TweenInfo.new(0.6) 
-		local PlayThis = TweenService:Create(LoadBar, TweenInf0, {Position = UDim2.new(0,25,0,310)})
+		local PlayThis = game.TweenService:Create(LoadBar, TweenInf0, {Position = UDim2.new(0,25,0,310)})
 		PlayThis:Play()
   		wait(1)
-  end
+  	end
+	end)
 
 return G
