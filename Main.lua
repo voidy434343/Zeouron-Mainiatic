@@ -169,15 +169,12 @@ information = function(string, func)
             rmsg = rmsg..v
      		TextLabel.Text = rmsg
         end
-    	
+    	if #Split == 1 then
+        	TextLabel:Destroy()
+        end
       	wait(0.01)
     end
 	end)
-	for i,v in pairs(G:GetChildren()) do
-        if v.Name == "info" then
-        	v:Destroy()
-        end
-    end
 end
 
 information("Join our discord!! "..Data.DiscordLink, function()
