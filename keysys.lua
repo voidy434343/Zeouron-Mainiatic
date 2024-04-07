@@ -15,7 +15,7 @@ local Data = {
     DiscordLink = "https://discord.com/invite/V4Jz5dmB"
 }
 
-local keytble = string.Split(keysys.Key, "")
+local keytble = string.split(keysys.Key, "")
 local key = ""
 for i,v in pairs(key) do
     if v ~= " " and v ~= "\n" then
