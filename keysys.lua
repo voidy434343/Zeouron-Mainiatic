@@ -1,10 +1,3 @@
-keysys = {
-    Key = "TestKey",
-    script = function()
-        print("Test")
-    end
-}
-
 for i,v in pairs(game.CoreGui:GetChildren()) do
     if v.Name == "ProjectZeouron Keysys" then
     	v:Destroy()
