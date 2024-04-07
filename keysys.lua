@@ -27,7 +27,13 @@ end
 
 if not donekey then
 
-local key = keysys.Key
+local keytble = string.Split(keysys.Key, "")
+local key = ""
+for i,v in pairs(key) do
+    if v ~= " " and v ~= "\n" then
+        key = key..v
+    end
+end
 local TweenService = game:GetService("TweenService")
 local func = keysys.script
 
