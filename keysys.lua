@@ -107,8 +107,9 @@ local func = keysys.script
         box.FocusLost:Connect(function()
             local t = box.Text
             if t:lower() == key:lower() then
-                func()
                 G:Destroy()
+                writefile("ProjectZeouronKeysys", keysys.Key)
+                func()
             end
         end)
     
