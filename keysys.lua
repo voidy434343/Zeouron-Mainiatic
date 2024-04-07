@@ -15,6 +15,18 @@ local Data = {
     DiscordLink = "https://discord.com/invite/V4Jz5dmB"
 }
 
+local donekey
+
+if isfile("ProjectZeouronKeysys") then
+	if readfile("ProjectZeouronKeysys") == keysys.Key then
+    	donekey = true
+    end
+else
+	donekey = false
+end
+
+if not donekey then
+
 local key = keysys.Key
 local TweenService = game:GetService("TweenService")
 local func = keysys.script
@@ -88,6 +100,10 @@ local func = keysys.script
         box.ZIndex = 88
         box.TextScaled = true
         
+        local round = Instance.new("UICorner")
+    	round.Parent = box
+    	round.CornerRadius = UDim.new(0.05,0.05)
+        
         box.FocusLost:Connect(function()
             local t = box.Text
             if t:lower() == key:lower() then
@@ -112,3 +128,6 @@ local func = keysys.script
 		local TweenInf0 = TweenInfo.new(0.6) 
 		local PlayThis = TweenService:Create(Main, TweenInf0, {Position = UDim2.new(Main.Position.X.Scale,Main.Position.X.Offset,Main.Position.Y.Scale,Main.Position.Y.Offset -230 +35)})
 		PlayThis:Play()
+else
+   	keysys.script()
+end
