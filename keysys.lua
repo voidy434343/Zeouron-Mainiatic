@@ -17,7 +17,7 @@ local Data = {
 
 local keytble = string.split(keysys.Key, "")
 local key = ""
-for i,v in pairs(key) do
+for i,v in pairs(keytble) do
     if v ~= " " and v ~= "\n" then
         key = key..v
     end
