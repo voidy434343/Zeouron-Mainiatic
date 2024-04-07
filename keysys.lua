@@ -15,18 +15,6 @@ local Data = {
     DiscordLink = "https://discord.com/invite/V4Jz5dmB"
 }
 
-local donekey
-
-if isfile("ProjectZeouronKeysys") then
-	if readfile("ProjectZeouronKeysys") == keysys.Key then
-    	donekey = true
-    end
-else
-	donekey = false
-end
-
-if not donekey then
-
 local keytble = string.Split(keysys.Key, "")
 local key = ""
 for i,v in pairs(key) do
@@ -34,6 +22,19 @@ for i,v in pairs(key) do
         key = key..v
     end
 end
+
+local donekey
+
+if isfile("ProjectZeouronKeysys") then
+	if readfile("ProjectZeouronKeysys") == key then
+    	donekey = true
+    end
+else
+	donekey = false
+end
+
+if not donekey then
+    
 local TweenService = game:GetService("TweenService")
 local func = keysys.script
 
@@ -129,7 +130,7 @@ local func = keysys.script
             local t = box.Text
             if t:lower() == key:lower() then
                 G:Destroy()
-                writefile("ProjectZeouronKeysys", keysys.Key)
+                writefile("ProjectZeouronKeysys", key)
                 func()
             end
         end)
