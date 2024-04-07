@@ -87,6 +87,21 @@ local func = keysys.script
         label.TextYAlignment = "Top"
         label.TextScaled = true
         
+        local GetKey = Instance.new("TextButton")
+        GetKey.Parent = Main
+        GetKey.Position = UDim2.new(0,25,0,180)
+        GetKey.Size = UDim2.new(0,620 -375,0,70)
+        GetKey.BackgroundColor3 = Data.DarkerC
+        GetKey.Text = "Get key"
+        GetKey.Font = Data.Font
+        GetKey.TextColor3 = Data.Color
+        GetKey.ZIndex = 88
+        GetKey.TextScaled = true
+        
+        GetKey.MouseButton1Click:Connect(function()
+            setclipboard(tostring(Data.DiscordLink))
+        end)
+        
         local box = Instance.new("TextBox")
         box.Parent = Main
         box.Position = UDim2.new(0,25,0,270)
