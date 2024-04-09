@@ -53,6 +53,7 @@ Exec.TextScaled = true
 Exec.Text = "Execute"
 
 Exec.MouseButton1Click:Connect(function()
+    G:Destroy()
     startupData.Script()
 end)
 
