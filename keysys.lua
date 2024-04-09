@@ -1,3 +1,4 @@
+if identifyexecutor() ~= "Wave" then
 for i,v in pairs(game.CoreGui:GetChildren()) do
     if v.Name == "ProjectZeouron Keysys" then
     	v:Destroy()
@@ -153,4 +154,8 @@ local func = keysys.script
 		PlayThis:Play()
 else
    	keysys.script()
+end
+else
+print("Your executor has a skill issue so we r gonna auto do the script")
+keysys.script()
 end
