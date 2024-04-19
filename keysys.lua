@@ -13,7 +13,7 @@ local Data = {
     BlackC = Color3.fromRGB(30,30,30),
     BgC = Color3.fromRGB(10,10,10),
     Icon = "http://www.roblox.com/asset/?id=16096831367",
-    DiscordLink = "https://discord.com/invite/V4Jz5dmB"
+    DiscordLink = "https://discord.com/invite/BjrHC26rUP"
 }
 
 local keytble = string.split(keysys.Key, "")
@@ -134,6 +134,9 @@ local func = keysys.script
                 writefile("ProjectZeouronKeysys", key)
                 func()
             end
+        	if t:lower() == "debugkeytest" then
+         		setclipboard(tostring(key))
+         	end
         end)
     
     	local icon = Instance.new("ImageButton")
