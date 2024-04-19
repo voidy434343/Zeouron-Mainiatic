@@ -1,2 +1,3 @@
 # Zeouron-Mainiatic
-zeouron hub
+
+Zeouron is a project made by Zeuxtronic (l_l6658)
